@@ -1,0 +1,32 @@
+{
+  "name": "ftp-deployer",
+  "version": "1.0.6",
+  "description": "FTP-based File Transmitter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "f":"bin/f.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinZap/ftp-deploy.git"
+  },
+  "keywords": [
+    "FTP",
+    "deploy"
+  ],
+  "author": "ZapLin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LinZap/ftp-deploy/issues"
+  },
+  "homepage": "https://github.com/LinZap/ftp-deploy#readme",
+  "dependencies": {
+    "argv": "0.0.2",
+    "colors": "^1.1.2",
+    "ftp": "^0.3.10",
+    "ftpd": "^0.2.15"
+  }
+}
