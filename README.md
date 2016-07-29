@@ -51,11 +51,12 @@ close
 更多設定可以參考如下
 
 ### Server-side
-| option | short | description |
-| -- | -- | -- |
-| --host | -h | 指定 Server IP，預設為 `127.0.0.1` (localhost) |
-| --port | -p | 指定 Server Port，預設為 `21` (FTP) |
-| --dir | -d | 指定 FTP Server 的根目錄，預設為當前目錄 |
+
+ option | short | description 
+--- | --- | ---
+ --host | -h | 指定 Server IP，預設為 `127.0.0.1` (localhost) 
+ --port | -p | 指定 Server Port，預設為 `21` (FTP) 
+ --dir | -d | 指定 FTP Server 的根目錄，預設為當前目錄 
 
 #### Example
 ```
@@ -63,12 +64,17 @@ dep server -h 192.168.1.1 -p 888 -d /var/www/html
 ```
 
 ### Client-side
-| option | short | description |
-| -- | -- | -- |
-| --host | -h | 指定欲傳送到的 IP，預設為 `127.0.0.1` (localhost) |
-| --port | -p | 指定欲傳送到的 port，預設為 `21` (FTP) |
-| --dir | -d | 指定目錄 (目錄下的所有檔案會被傳送)，預設為當前目錄 |
-| --ignore | -i | 指定欲忽略部傳送的檔案，預設不忽略任何檔案 (可以使用`*`來進行模糊匹配) |
+
+
+ option | short | description 
+--- | --- | ---
+ --host | -h | 指定欲傳送到的 IP，預設為 `127.0.0.1` (localhost) 
+ --port | -p | 指定欲傳送到的 port，預設為 `21` (FTP) 
+ --dir | -d | 指定目錄 (目錄下的所有檔案會被傳送)，預設為當前目錄 
+ --ignore | -i | 指定欲忽略部傳送的檔案，預設不忽略任何檔案 (可以使用`*`來進行模糊匹配) 
+
+
+
 
 #### Example
 ```
