@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var argv = require('argv'),
 	colors = require('colors'),
 	path = require('path'),
