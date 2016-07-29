@@ -1,6 +1,6 @@
 {
   "name": "ftp-deployer",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "FTP-based File Transmitter",
   "main": "bin/ftp-deployer.js",
   "scripts": {
