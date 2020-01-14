@@ -19,7 +19,7 @@ npm install -g ftp-deployer
 啟動 FTP Server
 
 ```
-dep server -d /var/www 
+dep server -h 192.168.1.1 -p 888 -d /var/www/html
 ```
 
 > 請注意若沒有指定 `-p` 連接埠，預設會開啟 `21`，請注意防火牆是否能允許通過。
@@ -33,22 +33,17 @@ Root Path at: /var/www
 
 #### 詳細參數如下
 
-### Server-side
-
  option | short | description 
 --- | --- | ---
  --host | -h | 指定 Server IP，預設為 `127.0.0.1` (localhost) 
  --port | -p | 指定 Server Port，預設為 `21` (FTP) 
  --dir | -d | 指定 FTP Server 的根目錄，預設為當前目錄 
 
-#### Example
-```
-dep server -h 192.168.1.1 -p 888 -d /var/www/html
-```
+
 
 ### Client-Side 使用端
 
-傳送目錄下的所有檔案到 Server
+傳送目錄下的所有檔案到 `192.168.1.1` Server
 ```
 dep publish -d ./myproject -h 192.168.1.1
 ```
@@ -76,14 +71,11 @@ close
 
 如果有某些檔案不想上傳，可以使用 `--ignore` 或 `-i` 來進行設定
 
-
-#### Example
-
-所有 `app.config` 與 副檔名為 `.xml` 的檔案，都不會被傳送
 ```
 dep publish -h 192.168.1.1 -p 888 -d ./myproject -i app.config *.xml
 ```
 
+> 所有 `app.config` 與 副檔名為 `.xml` 的檔案，都不會被傳送
 
 
 ## Configuration File
@@ -91,6 +83,7 @@ dep publish -h 192.168.1.1 -p 888 -d ./myproject -i app.config *.xml
 在任意執行位置，放置設定檔，就可以不需要每次都輸入參數：
 
 ### Server-Side
+
 設定檔案名稱必須為 **`server.json`**
 ```json
 {
@@ -101,6 +94,7 @@ dep publish -h 192.168.1.1 -p 888 -d ./myproject -i app.config *.xml
 ```
 
 ### Client-Side
+
 設定檔案名稱必須為 **`publish.json`**
 ```json
 {
@@ -111,17 +105,11 @@ dep publish -h 192.168.1.1 -p 888 -d ./myproject -i app.config *.xml
 }
 ```
 
-> 若您撰寫了設定檔則不需要在執行加註 option  
-> 但若也在 CLI 中設定 option 會覆蓋設定檔中的內容  
-> 設定檔中的項目皆為可選，若無設定會使用預設參數
+#### 注意事項
 
-
-#### Example
-
-```
-dep publish -p 888
-```
-> 此時以 port 888 為主
+* 若您撰寫了設定檔則不需要在執行加註 option  
+* 但若也在 CLI 中設定 option **會覆蓋設定檔中的內容**  
+* 設定檔中的項目皆為可選，若無設定會使用預設參數
 
 
 ## LICENSE
