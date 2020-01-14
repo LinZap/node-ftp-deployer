@@ -78,6 +78,21 @@ dep publish -h 192.168.1.1 -p 888 -d ./myproject -i app.config *.xml
 > 所有 `app.config` 與 副檔名為 `.xml` 的檔案，都不會被傳送
 
 
+### Will Be Uploaded 確認哪些檔案會被上傳
+
+```
+dep status
+```
+
+output:
+
+```
+[Publish files]
+ \fr000056.xml
+ \fr000057.xml
+ \fr000058.xml
+```
+
 ## Configuration File
 
 在任意執行位置，放置設定檔，就可以不需要每次都輸入參數：
