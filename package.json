@@ -1,7 +1,7 @@
 {
   "name": "ftp-deployer",
-  "version": "1.1.7",
-  "description": "FTP-based File Transmitter",
+  "version": "2.0.0",
+  "description": "FTP Deploy Tool",
   "main": "bin/ftp-deployer.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,6 +27,7 @@
     "argv": "0.0.2",
     "colors": "^1.1.2",
     "ftp": "^0.3.10",
-    "ftpd": "^0.2.15"
+    "ftpd": "git+https://github.com/nodeftpd/nodeftpd.git",
+    "yargs": "^15.1.0"
   }
 }

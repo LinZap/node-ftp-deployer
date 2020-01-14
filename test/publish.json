@@ -1,0 +1,6 @@
+{
+    "host": "127.0.0.1",
+    "port": 888,
+    "rootdir": "D:\\ftp-server-test\\client",
+    "ignore": [".git", "node_modules", "*.setting"]
+  }

@@ -8,19 +8,16 @@ FTP-Deployer 是一個基於 FTP 的檔案傳輸工具，您可以透過簡單�
 npm install -g ftp-deployer
 ```
 
-## Pure CLI
-```
-dep <feature> <options>
-```
-
-## Examples
+## Usage 
 
 假設我們要將 `localhsot` 上的 `./myproject` 佈署到 `192.168.1.1` 主機上的 `/var/www`
 
 > 兩台主機都必須安裝 `FTP-Deployer`
 
-### Server-side
+### Server-Side 伺服端
+
 啟動 FTP Server
+
 ```
 dep server -d /var/www 
 ```
@@ -28,27 +25,13 @@ dep server -d /var/www
 > 請注意若沒有指定 `-p` 連接埠，預設會開啟 `21`，請注意防火牆是否能允許通過。
 
 output:
+
 ```
 FTP-Server listening on 127.0.0.1 port 21
 Root Path at: /var/www
 ```
 
-### Client-side
-傳送目錄下的所有檔案到 Server
-```
-dep publish -d ./myproject -h 192.168.1.1
-```
-
-output:
-```
-[success] \index.php
-[success] \server.php
-end
-close
-```
-
-## Options
-更多設定可以參考如下
+#### 詳細參數如下
 
 ### Server-side
 
@@ -63,10 +46,25 @@ close
 dep server -h 192.168.1.1 -p 888 -d /var/www/html
 ```
 
-### Client-side
+### Client-Side 使用端
+
+傳送目錄下的所有檔案到 Server
+```
+dep publish -d ./myproject -h 192.168.1.1
+```
+
+output:
+```
+[success] \index.php
+[success] \server.php
+end
+close
+```
+
+#### 詳細參數如下
 
 
- option | short | description 
+| option | short | description 
 --- | --- | ---
  --host | -h | 指定欲傳送到的 IP，預設為 `127.0.0.1` (localhost) 
  --port | -p | 指定欲傳送到的 port，預設為 `21` (FTP) 
@@ -74,20 +72,25 @@ dep server -h 192.168.1.1 -p 888 -d /var/www/html
  --ignore | -i | 指定欲忽略部傳送的檔案，預設不忽略任何檔案 (可以使用`*`來進行模糊匹配) 
 
 
+### Ignore files 忽略傳送特定檔案
+
+如果有某些檔案不想上傳，可以使用 `--ignore` 或 `-i` 來進行設定
 
 
 #### Example
+
+所有 `app.config` 與 副檔名為 `.xml` 的檔案，都不會被傳送
 ```
-dep publish -h 192.168.1.1 -p 888 -d ./myproject -i .git,node_modules,setting.json
+dep publish -h 192.168.1.1 -p 888 -d ./myproject -i app.config *.xml
 ```
 
-<br>
+
 
 ## Configuration File
 
-你也可以透過添加設定檔來進行 option 設定，設定檔必須**存放在當前的執行目錄下**。格式如下所示：
+在任意執行位置，放置設定檔，就可以不需要每次都輸入參數：
 
-### Server-side
+### Server-Side
 設定檔案名稱必須為 **`server.json`**
 ```json
 {
@@ -97,7 +100,7 @@ dep publish -h 192.168.1.1 -p 888 -d ./myproject -i .git,node_modules,setting.js
 }
 ```
 
-### Client-side
+### Client-Side
 設定檔案名稱必須為 **`publish.json`**
 ```json
 {
@@ -108,10 +111,10 @@ dep publish -h 192.168.1.1 -p 888 -d ./myproject -i .git,node_modules,setting.js
 }
 ```
 
-> 若您撰寫了設定檔則不需要在執行加註 option，
-> 但若也在 CLI 中設定 option 會覆蓋設定檔中的內容。
-> 
-> 設定檔中的項目皆為可選，若無設定會使用系統預設參數。
+> 若您撰寫了設定檔則不需要在執行加註 option  
+> 但若也在 CLI 中設定 option 會覆蓋設定檔中的內容  
+> 設定檔中的項目皆為可選，若無設定會使用預設參數
+
 
 #### Example
 
@@ -124,7 +127,7 @@ dep publish -p 888
 ## LICENSE
 
 ```
-Copyright (C) 2016 ZapLin
+Copyright (C) 2020 ZapLin
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in

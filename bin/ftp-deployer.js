@@ -1,81 +1,82 @@
 #!/usr/bin/env node
-var argv = require('argv'),
-    colors = require('colors'),
-    path = require('path'),
-    package_option = require('../package.json'),
-    ftp_server = require('../lib/ftp-server.js'),
-    ftp_publisher = require('../lib/publisher.js'),
-    ftp_status = require('../lib/status.js'),
-    f = require('../lib/patch-fs.js'),
-    options = [
-    {
-      name: 'port',
-      short: 'p',
-      type: 'int',
-      description: 'FTP server at the port'
-    },
-    {
-      name: 'dir',
-      short: 'd',
-      type: 'string',
-      description: 'FTP server in the directory'
-    },
-    {
-      name: 'host',
-      short: 'h',
-      type: 'string',
-      description: 'FTP server on the host'           
-    },
-    {
-      name: 'ignore',
-      short: 'i',
-      type: 'csv,string',
-      description: 'what kind of files you don\'t want to publish'    
-    }],
-    args = argv.option(options).version(package_option.version).run(),
-    mode = args.targets[0];
+const path = require('path'),
+  ftp_server = require('../lib/ftp-server.js'),
+  ftp_publisher = require('../lib/publisher.js'),
+  ftp_status = require('../lib/status.js'),
+  f = require('../lib/patch-fs.js');
 
 
-switch(mode) {
-  case 'server':
-      var setting = parseArgv('server.json')
+require('yargs')
+  .command(
+    'server', 'start the ftp server',
+    (yargs) => { },
+    (argv) => {
+      var setting = parseArgv('server.json', argv)
       ftp_server(setting)
-  break;
-  case 'publish':
-      var setting = parseArgv('publish.json')
+    }
+  )
+  .command(
+    'publish', 'start the publish',
+    (yargs) => { },
+    (argv) => {
+      var setting = parseArgv('publish.json', argv)
       ftp_publisher(setting)
-  break;
-  case 'status':
-      var setting = parseArgv('publish.json')
+    }
+  )
+  .command(
+    'status', 'start the status',
+    (yargs) => { },
+    (argv) => {
+      var setting = parseArgv('publish.json', argv)
       ftp_status(setting)
-  break;
-  default:
-      console.log('[error] '.red+`dep: '${mode}' is not a ftp-deployer command`);
-}
+    }
+  )
+  .option('port', {
+    alias: 'p',
+    type: 'number',
+    description: 'FTP server at the port'
+  })
 
+  .option('dir', {
+    alias: 'd',
+    type: 'string',
+    description: 'FTP server in the directory'
+  })
+
+  .option('host', {
+    alias: 'h',
+    type: 'string',
+    description: 'FTP server on the host'
+  })
+
+  .option('ignore', {
+    alias: 'i',
+    type: 'array',
+    description: 'what kind of files you don\'t want to publish'
+  })
+  .argv
 
 /*
-  argv option is first, option_file is secondary
+  post-options, patch default value to args
 */
-function parseArgv(opt_fileName){
+function parseArgv(opt_fileName, args) {
+  var srv_path = path.resolve(process.cwd() + '/' + opt_fileName),
+    srv_optexist = f.exists(srv_path),
+    srv_opt = srv_optexist ? require(srv_path) : false,
 
-  var srv_path = path.resolve(process.cwd()+'/'+opt_fileName),
-      srv_optexist = f.exists(srv_path),
-      srv_opt = srv_optexist? require(srv_path): false,
+    rootdir = srv_opt ? srv_opt.rootdir || './' : './',
+    port = srv_opt ? srv_opt.port || 21 : 21,
+    host = srv_opt ? srv_opt.host || '127.0.0.1' : '127.0.0.1',
+    ignore = srv_opt ? srv_opt.ignore || [] : [];
 
-  rootdir = srv_opt? srv_opt.rootdir||'./' : './',
-  port = srv_opt? srv_opt.port||21 : 21,
-  host = srv_opt? srv_opt.host||'127.0.0.1' : '127.0.0.1',
-  ignore = srv_opt? srv_opt.ignore||[]:[];
-
-  rootdir = args.options.dir ? 
-  (path.isAbsolute(args.options.dir)? 
-    path.resolve(args.options.dir):
-    path.resolve('./'+args.options.dir)):
-  path.resolve(rootdir),
-  port = args.options.port || port;
-  host = args.options.host || host;
-  ignore = args.options.ignore || ignore;
+  rootdir = args.dir ?
+    (path.isAbsolute(args.dir) ?
+      path.resolve(args.dir) :
+      path.resolve('./' + args.dir)) :
+    path.resolve(rootdir),
+    port = args.port || port;
+  host = args.host || host;
+  ignore = args.ignore || ignore;
 
   return {
     host: host,
